@@ -1,4 +1,7 @@
-## 1、java
+# Java知识点整理
+
+[toc]
+
 ### java基础
 > * 反射
 > * 注解
@@ -40,4 +43,7 @@
 ### java源码
 > * 常用类实现方法
 > * java7、java8实现区别
-### java8、9、10学习
+> * 下载jdk源码，学习时在源码中标注问题、解释
+> * 有时间可以看一下hotspot实现
+> * [LearningJDK](https://github.com/kangjianwei/LearningJDK/blob/master/%E5%B7%B2%E9%98%85%E4%BB%A3%E7%A0%81%E6%B8%85%E5%8D%95_%E6%8C%89%E5%8A%9F%E8%83%BD%E6%8E%92%E5%BA%8F.md)
+### java8、12学习
