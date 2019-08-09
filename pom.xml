@@ -63,6 +63,13 @@
             <version>3.2.12</version>
         </dependency>
 
+        <!-- javax.validation:validation-api -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+
     </dependencies>
 
     <build>
