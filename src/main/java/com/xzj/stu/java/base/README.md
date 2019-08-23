@@ -21,3 +21,56 @@ java接口可以多继承。Interface3 Extends Interface0, Interface1, interface
 #### volatile是synchronized的一种弱实现，它可以保证变量的可见性，而不能保证程序执行的原子性。JVM运行多线程时，在主内存中保存着共享变量，每个线程运行时有一个自己的栈，用来保存从本线程运行需要的变量。当线程访问一个变量值的时候，首先通过对象的引用找到在主内存的地址，然后把变量的值拷贝到本线程的栈中，建立一个变量的副本。在线程对该变量计算的过程中，该变量副本和主内存的原始变量就没有任何关系了，当线程结算结束时，再将变量副本写回到主内存中对象变量的地址中，更新内存中的共享变量，详细的交互过程如下图所示。
 ![线程工作内存与主内存](https://images0.cnblogs.com/blog/206865/201401/191326344702.jpg)
 #### 使用volatile修饰的变量，JVM只能保证从主内存加载到线程工作栈中的值是最新的，但使用过程不能完全保证线程对该变量同步的情况，因此，建议少使用volatile，对需要同步的地方使用synchronized。
+
+
+
+
+
+
+### HashMap
+resize()  扩容逻辑
+> https://www.toutiao.com/a6726809084521087496/
+```
+if (oldTab != null) {
+    for (int j = 0; j < oldCap; ++j) {
+        Node<K,V> e;
+        if ((e = oldTab[j]) != null) {
+            oldTab[j] = null;
+            if (e.next == null)
+                newTab[e.hash & (newCap - 1)] = e;
+            else if (e instanceof TreeNode)
+                ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+            else { // preserve order
+                Node<K,V> loHead = null, loTail = null;
+                Node<K,V> hiHead = null, hiTail = null;
+                Node<K,V> next;
+                do {
+                    next = e.next;
+                    if ((e.hash & oldCap) == 0) {
+                        if (loTail == null)
+                            loHead = e;
+                        else
+                            loTail.next = e;
+                        loTail = e;
+                    } else {
+                        if (hiTail == null)
+                            hiHead = e;
+                        else
+                            hiTail.next = e;
+                        hiTail = e;
+                    }
+                } while ((e = next) != null);
+                if (loTail != null) {
+                    loTail.next = null;
+                    newTab[j] = loHead;
+                }
+                if (hiTail != null) {
+                    hiTail.next = null;
+                    newTab[j + oldCap] = hiHead;
+                }
+            }
+        }
+    }
+}
+```
+![](http://p3.pstatp.com/large/pgc-image/1540890421927f9679a3a3d)
