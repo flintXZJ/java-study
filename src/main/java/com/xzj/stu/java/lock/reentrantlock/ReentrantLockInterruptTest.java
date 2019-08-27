@@ -26,7 +26,7 @@ public class ReentrantLockInterruptTest {
                 while (System.currentTimeMillis() - startTime < 5000) {
 
                 }
-                System.out.println(Thread.currentThread().getName() + ": 读线程等待时间已超过5秒，请求中断....");
+                System.out.println(Thread.currentThread().getName() + ": 读线程等待时间已超过5秒，请求中断...");
                 readThread.interrupt();
             }
         }, "ThirdThread").start();

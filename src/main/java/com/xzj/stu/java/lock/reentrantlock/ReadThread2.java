@@ -16,7 +16,7 @@ public class ReadThread2 implements Runnable {
         try {
             myBuffer.readPolling();
         } catch (Exception e) {
-            System.out.println(Thread.currentThread().getName() + ": 读线程已经被中断.....");
+            System.out.println(Thread.currentThread().getName() + ": 读线程已经被中断.");
         }
     }
 }

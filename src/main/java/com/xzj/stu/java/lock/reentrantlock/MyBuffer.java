@@ -17,10 +17,10 @@ public class MyBuffer {
             lock.lock();
 
             long writeStartTime = System.currentTimeMillis();
-            System.out.println(Thread.currentThread().getName() + ": 写操作开始，预计执行时间10秒....");
+            System.out.println(Thread.currentThread().getName() + ": 写操作开始，预计执行时间10秒...");
             while (System.currentTimeMillis() - writeStartTime < 10000) {
             }
-            System.out.println(Thread.currentThread().getName() + ": 写操作完成....");
+            System.out.println(Thread.currentThread().getName() + ": 写操作完成.");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -42,11 +42,12 @@ public class MyBuffer {
             lock.lockInterruptibly();
 
 //            //写线程4秒，第三方线程在读写线程启动5秒后中断读线程；实验能否中断已获取锁的线程？
+            System.out.println(Thread.currentThread().getName() + ": 读操作获取锁...");
 //            long readStartTime = System.currentTimeMillis();
 //            while (System.currentTimeMillis() - readStartTime < 5000) {
 //            }
 
-            System.out.println(Thread.currentThread().getName() + ": 读操作完成....");
+            System.out.println(Thread.currentThread().getName() + ": 读操作完成.");
         } finally {
             lock.unlock();
         }
@@ -64,13 +65,13 @@ public class MyBuffer {
             try {
                 //锁可用，则成功获取锁；获取锁后进行处理
                 lock.lockInterruptibly();
-                System.out.println(Thread.currentThread().getName() + ": 获取锁之后，读操作完成....");
+                System.out.println(Thread.currentThread().getName() + ": 获取锁之后，读操作完成...");
             } finally {
                 lock.unlock();
             }
         } else {
             //锁不可用，其他处理方法
-            System.out.println(Thread.currentThread().getName() + ": 无锁，读操作完成....");
+            System.out.println(Thread.currentThread().getName() + ": 无锁，读操作完成.");
         }
     }
 }
