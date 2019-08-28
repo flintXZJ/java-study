@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
  * @author zhijunxie
  * @date 2019/8/9 14:41
  */
-public class Test {
+public class AnnotationDemo {
 
     public static void main(String[] args) {
 
