@@ -17,7 +17,8 @@ public class Counter implements Runnable {
         synchronized (this) {
             for (int i = 0; i < 5; i++) {
                 try {
-                    System.out.println(Thread.currentThread().getName() + ":" + (count++));
+                    count++;
+                    System.out.println(Thread.currentThread().getName() + " count:" + count);
                     Thread.sleep(500L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

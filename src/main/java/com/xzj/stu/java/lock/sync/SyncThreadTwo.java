@@ -26,7 +26,8 @@ public class SyncThreadTwo implements Runnable {
     public synchronized void method() {
         for (int i = 0; i < 5; i++) {
             try {
-                System.out.println(Thread.currentThread().getName() + ": a" + (count++));
+                count++;
+                System.out.println(Thread.currentThread().getName() + ": a" + count);
                 Thread.sleep(500L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -40,7 +41,8 @@ public class SyncThreadTwo implements Runnable {
     public synchronized static void method2() {
         for (int i = 0; i < 5; i++) {
             try {
-                System.out.println(Thread.currentThread().getName() + ": b" + (count++));
+                count++;
+                System.out.println(Thread.currentThread().getName() + ": b" + count);
                 Thread.sleep(500L);
             } catch (InterruptedException e) {
                 e.printStackTrace();

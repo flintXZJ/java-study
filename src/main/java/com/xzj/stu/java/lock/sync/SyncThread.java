@@ -7,7 +7,7 @@ package com.xzj.stu.java.lock.sync;
  * @date 2019/5/13
  */
 public class SyncThread implements Runnable {
-    private static int count = 0;
+    private int count = 0;
 
     public SyncThread() {
     }
@@ -17,7 +17,8 @@ public class SyncThread implements Runnable {
         synchronized (this) {
             for (int i = 0; i < 5; i++) {
                 try {
-                    System.out.println(Thread.currentThread().getName() + ":" + (count++));
+                    count++;
+                    System.out.println(Thread.currentThread().getName() + " count:" + count);
                     Thread.sleep(500L);
                 } catch (Exception e) {
                     e.printStackTrace();

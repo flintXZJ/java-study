@@ -51,7 +51,7 @@ public class SyncEntity {
 
     public static void fun5() {
         for (int i = 0; i < 5; i++) {
-            System.out.println(Thread.currentThread().getName() + ": fun5()=" + i);
+            System.out.println(Thread.currentThread().getName() + ": static fun5()=" + i);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
