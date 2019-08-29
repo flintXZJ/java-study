@@ -21,3 +21,212 @@
 
 
 ### 实现原理
+> 见com.xzj.stu.java.lock.sync.SynchronizedDemo  
+使用javap -c -v SynchronizedDemo.class反汇编字节码
+```
+Classfile /D:/mycode/java-study/target/classes/com/xzj/stu/java/lock/sync/SynchronizedDemo.class
+  Last modified 2019-8-29; size 942 bytes
+  MD5 checksum c25d8e54543c5994a9c7d9df37df3f89
+  Compiled from "SynchronizedDemo.java"
+public class com.xzj.stu.java.lock.sync.SynchronizedDemo
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #9.#32         // java/lang/Object."<init>":()V
+   #2 = Fieldref           #6.#33         // com/xzj/stu/java/lock/sync/SynchronizedDemo.count:I
+   #3 = Fieldref           #6.#34         // com/xzj/stu/java/lock/sync/SynchronizedDemo.sum:J
+   #4 = Long               100l
+   #6 = Class              #35            // com/xzj/stu/java/lock/sync/SynchronizedDemo
+   #7 = Long               200l
+   #9 = Class              #36            // java/lang/Object
+  #10 = Utf8               count
+  #11 = Utf8               I
+  #12 = Utf8               sum
+  #13 = Utf8               J
+  #14 = Utf8               <init>
+  #15 = Utf8               ()V
+  #16 = Utf8               Code
+  #17 = Utf8               LineNumberTable
+  #18 = Utf8               LocalVariableTable
+  #19 = Utf8               this
+  #20 = Utf8               Lcom/xzj/stu/java/lock/sync/SynchronizedDemo;
+  #21 = Utf8               fun1
+  #22 = Utf8               fun2
+  #23 = Utf8               fun3
+  #24 = Utf8               StackMapTable
+  #25 = Class              #35            // com/xzj/stu/java/lock/sync/SynchronizedDemo
+  #26 = Class              #36            // java/lang/Object
+  #27 = Class              #37            // java/lang/Throwable
+  #28 = Utf8               fun4
+  #29 = Utf8               <clinit>
+  #30 = Utf8               SourceFile
+  #31 = Utf8               SynchronizedDemo.java
+  #32 = NameAndType        #14:#15        // "<init>":()V
+  #33 = NameAndType        #10:#11        // count:I
+  #34 = NameAndType        #12:#13        // sum:J
+  #35 = Utf8               com/xzj/stu/java/lock/sync/SynchronizedDemo
+  #36 = Utf8               java/lang/Object
+  #37 = Utf8               java/lang/Throwable
+{
+  public com.xzj.stu.java.lock.sync.SynchronizedDemo();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: iconst_0
+         6: putfield      #2                  // Field count:I
+         9: return
+      LineNumberTable:
+        line 15: 0
+        line 11: 4
+        line 17: 9
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      10     0  this   Lcom/xzj/stu/java/lock/sync/SynchronizedDemo;
+
+  public synchronized void fun1();
+    descriptor: ()V
+    flags: ACC_PUBLIC, ACC_SYNCHRONIZED
+    Code:
+      stack=3, locals=1, args_size=1
+         0: aload_0
+         1: dup
+         2: getfield      #2                  // Field count:I
+         5: iconst_1
+         6: iadd
+         7: putfield      #2                  // Field count:I
+        10: return
+      LineNumberTable:
+        line 20: 0
+        line 21: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      11     0  this   Lcom/xzj/stu/java/lock/sync/SynchronizedDemo;
+
+  public static synchronized void fun2();
+    descriptor: ()V
+    flags: ACC_PUBLIC, ACC_STATIC, ACC_SYNCHRONIZED
+    Code:
+      stack=4, locals=0, args_size=0
+         0: getstatic     #3                  // Field sum:J
+         3: ldc2_w        #4                  // long 100l
+         6: ladd
+         7: putstatic     #3                  // Field sum:J
+        10: return
+      LineNumberTable:
+        line 24: 0
+        line 25: 10
+
+  public void fun3();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=1
+         0: aload_0
+         1: dup
+         2: astore_1
+         3: monitorenter
+         4: aload_0
+         5: dup
+         6: getfield      #2                  // Field count:I
+         9: iconst_1
+        10: iadd
+        11: putfield      #2                  // Field count:I
+        14: aload_1
+        15: monitorexit
+        16: goto          24
+        19: astore_2
+        20: aload_1
+        21: monitorexit
+        22: aload_2
+        23: athrow
+        24: return
+      Exception table:
+         from    to  target type
+             4    16    19   any
+            19    22    19   any
+      LineNumberTable:
+        line 28: 0
+        line 29: 4
+        line 30: 14
+        line 31: 24
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      25     0  this   Lcom/xzj/stu/java/lock/sync/SynchronizedDemo;
+      StackMapTable: number_of_entries = 2
+        frame_type = 255 /* full_frame */
+          offset_delta = 19
+          locals = [ class com/xzj/stu/java/lock/sync/SynchronizedDemo, class java/lang/Object ]
+          stack = [ class java/lang/Throwable ]
+        frame_type = 250 /* chop */
+          offset_delta = 4
+
+  public void fun4();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=4, locals=3, args_size=1
+         0: ldc           #6                  // class com/xzj/stu/java/lock/sync/SynchronizedDemo
+         2: dup
+         3: astore_1
+         4: monitorenter
+         5: getstatic     #3                  // Field sum:J
+         8: ldc2_w        #7                  // long 200l
+        11: ladd
+        12: putstatic     #3                  // Field sum:J
+        15: aload_1
+        16: monitorexit
+        17: goto          25
+        20: astore_2
+        21: aload_1
+        22: monitorexit
+        23: aload_2
+        24: athrow
+        25: return
+      Exception table:
+         from    to  target type
+             5    17    20   any
+            20    23    20   any
+      LineNumberTable:
+        line 34: 0
+        line 35: 5
+        line 36: 15
+        line 37: 25
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      26     0  this   Lcom/xzj/stu/java/lock/sync/SynchronizedDemo;
+      StackMapTable: number_of_entries = 2
+        frame_type = 255 /* full_frame */
+          offset_delta = 20
+          locals = [ class com/xzj/stu/java/lock/sync/SynchronizedDemo, class java/lang/Object ]
+          stack = [ class java/lang/Throwable ]
+        frame_type = 250 /* chop */
+          offset_delta = 4
+
+  static {};
+    descriptor: ()V
+    flags: ACC_STATIC
+    Code:
+      stack=2, locals=0, args_size=0
+         0: lconst_0
+         1: putstatic     #3                  // Field sum:J
+         4: return
+      LineNumberTable:
+        line 13: 0
+}
+SourceFile: "SynchronizedDemo.java"
+```
+从上述反汇编结果可以看出，jvm对于同步方法和同步代码块的处理方式不同。
+对于同步方法，jvm采用ACC_SYNCHRONIZED标识符来实现同步。对于同步代码块，jvm采用monitorenter、monitorexit指令来实现同步。
+具体内容参见[The Java® Virtual Machine Specification 2.11.10 Synchronization](https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11.10)的介绍。
+
+因此：   
+同步方法通过ACC_SYNCHRONIZED标识符隐式的对方法进行加锁。当线程要执行的方法被标注上ACC_SYNCHRONIZED时，需要先获得锁才能执行该方法。  
+
+同步代码块通过monitorenter和monitorexit执行来进行加锁。当线程执行到monitorenter的时候要先获得所锁，才能执行后面的方法。当线程执行到monitorexit的时候则要释放锁。
+  
+每个对象自身维护这一个被加锁次数的计数器，当计数器数字为0时表示可以被任意线程获得锁。当计数器不为0时，只有获得锁的线程才能再次获得锁。即可重入锁。
