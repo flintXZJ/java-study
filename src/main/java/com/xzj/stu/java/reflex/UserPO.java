@@ -1,12 +1,15 @@
 package com.xzj.stu.java.reflex;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * @author zhijunxie
  * @date 2019/7/30 18:31
  */
-public class UserPO implements Serializable {
+@Data
+public class UserPO extends BasePO implements Serializable {
     private static final long serialVersionUID = 6703216809599385427L;
 
     private UserPO() {
@@ -18,6 +21,10 @@ public class UserPO implements Serializable {
         this.age = age;
     }
 
+    public String publicName;
+
+    protected String protectedName;
+
     private String name;
 
     private String address;
@@ -27,46 +34,6 @@ public class UserPO implements Serializable {
     private Integer sex;
 
     private String city;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     private void sayHello(String content, Integer age) {
         System.out.println(this.name + " is " + age + " old, say: " + content);

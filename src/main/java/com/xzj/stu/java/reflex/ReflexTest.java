@@ -20,9 +20,13 @@ public class ReflexTest {
         Class clazz = userPO.getClass();
 
         try {
+            //通过实例object.getClass()获取到的Class与Class.forName()获取到的一致，
+            //因为它们获取的都是运行时方法区的类信息，包含：构造器、方法、属性等信息。
 //            Class clazz = Class.forName("com.xzj.stu.java.reflex.UserPO");
 //            Object userPO = clazz.newInstance();
 
+            //getConstructor 、 getField 和 getMethod只能获取public修饰的构造器、属性和方法
+            //getDeclaredXXX可以获取所有权限的构造器、属性和方法，但是不能获取父类继承下来的。
             Field name = clazz.getDeclaredField("name");
             name.setAccessible(true);
             Object value = name.get(userPO);

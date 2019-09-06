@@ -1,13 +1,19 @@
 package com.xzj.stu.java.proxy.dynamic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
+ * 动态代理
  * @author zhijunxie
  * @date 2019/8/8 18:21
  */
 public class Client {
+    private static final Logger logger = LoggerFactory.getLogger(Client.class);
+
     public static void main(String[] args) {
 
         //代理的真实对象
@@ -23,11 +29,13 @@ public class Client {
         Class<?>[] interfaces = realSubject.getClass().getInterfaces();
 
         //该方法用于为指定类装载器、一组接口及调用处理器生成动态代理类实例
+        //jdk中的动态代理只支持对接口的代理不能对一个普通的 Java 类提供代理。
+        //当RealSubject没有实现Subject的时候，报错【ClassCastException: com.sun.proxy.$Proxy0 cannot be cast to com.xzj.stu.java.proxy.dynamic.RealSubject】
         Subject subject = (Subject) Proxy.newProxyInstance(classLoader, interfaces, invocationHandler);
 
-        System.out.println("client: 动态代理对象的类型：" + subject.getClass().getName());
+        logger.info("client: 动态代理对象的类型：{}", subject.getClass().getName());
 
         String retStr = subject.sayHello("xzj");
-        System.out.println("client: "+retStr);
+        logger.info("client: result = {}", retStr);
     }
 }

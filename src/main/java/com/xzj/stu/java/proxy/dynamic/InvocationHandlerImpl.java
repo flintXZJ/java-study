@@ -1,5 +1,8 @@
 package com.xzj.stu.java.proxy.dynamic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -11,6 +14,7 @@ import java.lang.reflect.Method;
  * @date 2019/8/8 18:12
  */
 public class InvocationHandlerImpl implements InvocationHandler {
+    private static final Logger logger = LoggerFactory.getLogger(InvocationHandlerImpl.class);
 
     private Object subject;
 
@@ -31,9 +35,9 @@ public class InvocationHandlerImpl implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // TODO: 2019/8/8 doSomething
-        System.out.println("InvocationHandlerImpl: 调用真是对象方法前...");
+        logger.info("InvocationHandlerImpl: 调用真是对象方法前...");
         Object returnValue = method.invoke(subject, args);
-        System.out.println("InvocationHandlerImpl: 调用真是对象方法后.");
+        logger.info("InvocationHandlerImpl: 调用真是对象方法后.");
         return returnValue;
     }
 }
