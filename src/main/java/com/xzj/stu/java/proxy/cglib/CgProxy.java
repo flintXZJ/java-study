@@ -15,10 +15,10 @@ public class CgProxy implements MethodInterceptor {
     /**
      * 被代理对象
      */
-    private Object target;
+    private Class clazz;
 
-    public CgProxy(Object target) {
-        this.target = target;
+    public CgProxy(Class clazz) {
+        this.clazz = clazz;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CgProxy implements MethodInterceptor {
     public Object getProxyObject() {
         Enhancer enhancer = new Enhancer();
         //设置父类
-        enhancer.setSuperclass(this.target.getClass());
+        enhancer.setSuperclass(clazz);
         //设置回调，在调用父类方法时，回调 this.intercept()
         enhancer.setCallback(this);
         //创建代理对象

@@ -78,5 +78,24 @@ public class CreateTest {
 //                }
 //            });
 //        }
+
+        boolean flag = false;
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run(){
+                System.out.println("开始");
+                try {
+                    Thread.sleep(10000L);
+                }catch (Exception e) {
+
+                }
+            }
+        });
+        System.out.println("thread.state="+thread.getState());
+        thread.start();
+        System.out.println("thread.state="+thread.getState());
+        Thread.sleep(1000);
+        System.out.println("thread.state="+thread.getState());
     }
 }
