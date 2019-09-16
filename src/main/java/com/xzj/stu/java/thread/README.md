@@ -3,7 +3,15 @@
 > 参考：https://blog.csdn.net/luoweifu/article/details/46664809
 
 
-### 一、线程的生命周期 **此线程生命周期错误参照Thread.state
+### 一、java线程的生命周期
+* 1 new：new语句创建时，线程状态
+* 2 runable：线程运行状态，start()方法启动之后。线程只是在jvm中处于执行状态，但是在操作系统中可能还在等待cpu分片。或者操作系统中该线程在等待io结束
+* 3 block：等待获取锁，或获取锁之后调用object.wait()之后等待获取锁
+* 4 waiting：调用object.wait()、Thread.join、LockSupport.park之后
+* 5 timed_waiting：thread.sleep()、object.wait(timeouot)、thread.join(timeout)等，进入此状态
+* 6 terminated：线程结束
+
+操作系统中线程生命周期
 * 1、新建状态（NEW）：用Thread的new语句创建了线程对象，此时对象只在对内存中分配了内存，并初始化其成员变量的值。
 * 2、就绪状态（RUNNABLE）：当新建状态下的线程对象调用了start()方法后，该线程就进入了就绪状态。Java虚拟机会为其创建方法调用栈和程序计数器，等待调度运行，处于这个状态的线程位于可运行池中，等待获得CPU使用权。
 * 3、运行状态（RUNNING）：正在被CPU执行的线程状态：如果处于就绪状态的线程获得了CPU，开始执行run()方法的线程执行体。
@@ -17,8 +25,6 @@
 > 1、正常结束：run()或call()方法执行完成，线程正常结束  
 > 2、异常结束：线程抛出一个未捕获的Exception或Error  
 > 3、调用stop：直接调用该线程的stop()方法来结束该线程—该方法通常容易导致死锁，不推荐使用  
-
-
 
 ![线程周期](http://images.cnitblog.com/i/426802/201406/232002051747387.jpg)
 
