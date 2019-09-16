@@ -1,6 +1,5 @@
 package com.xzj.stu.java.io;
 
-import java.io.FileInputStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
