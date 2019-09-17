@@ -12,7 +12,7 @@ import java.nio.channels.FileLock;
 /**
  * 文件锁
  *
- * @author tiany
+ * @author xzj
  */
 public class NioFileLock {
     private static final Logger LOGGER = LoggerFactory.getLogger(NioFileLock.class);
