@@ -74,3 +74,7 @@ if (oldTab != null) {
 }
 ```
 ![](http://p3.pstatp.com/large/pgc-image/1540890421927f9679a3a3d)
+
+
+#### 代码块的执行顺序
+静态代码块>构造代码块>构造函数>普通代码块
