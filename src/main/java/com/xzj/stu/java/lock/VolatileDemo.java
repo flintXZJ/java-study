@@ -1,4 +1,4 @@
-package com.xzj.stu.java.base;
+package com.xzj.stu.java.lock;
 
 /**
  * @author zhijunxie
@@ -8,6 +8,9 @@ public class VolatileDemo {
     public static volatile int race = 0;
     private static final int THREADS_COUNT = 20;
 
+    /**
+     * race++非原子操作，所以下面程序执行之后race!=200000
+     */
     public static void increase() {
         race++;
     }
