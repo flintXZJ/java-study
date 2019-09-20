@@ -60,6 +60,10 @@ public Object getProxyObject() {
 带有注解标识的接口或者在Spring.XML中配置的bean会在Spring初始化的时候，被Spring通过反射加载实例化到Spring容器中。
 
 
+#### 动态代理常见用例
+数据库连接以及事务管理
+单元测试中的动态Mock对象
+
 参考：  
 [Java JDK 动态代理（AOP）使用及实现原理分析[精品长文]](https://juejin.im/post/5d31c1b7f265da1b9421845d)  
 [关于Spring AOP与IOC的个人思考[精品长文]](https://juejin.im/post/5d31d192e51d45105d63a5ea)

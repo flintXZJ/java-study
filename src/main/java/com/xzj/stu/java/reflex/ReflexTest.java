@@ -4,10 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * 父类非public方法属性如何获取
+ *
+ *
  * @author zhijunxie
  * @date 2019/7/30 18:15
  */
@@ -17,7 +21,15 @@ public class ReflexTest {
 
     public static void main(String[] args) throws Exception {
         UserPO userPO = new UserPO("xzj", 28);
+        // 获取class的三种方法
         Class clazz = userPO.getClass();
+//        Class clazz = UserPO.class;
+//        Class clazz = Class.forName("com.xzj.stu.java.reflex.UserPO");
+
+        // 获取对象的2中方法
+//        Object object = clazz.newInstance();
+//        clazz.getDeclaredConstructor().newInstance();
+
 
         try {
             //通过实例object.getClass()获取到的Class与Class.forName()获取到的一致，
@@ -25,8 +37,8 @@ public class ReflexTest {
 //            Class clazz = Class.forName("com.xzj.stu.java.reflex.UserPO");
 //            Object userPO = clazz.newInstance();
 
-            //getConstructor 、 getField 和 getMethod只能获取public修饰的构造器、属性和方法
-            //getDeclaredXXX可以获取所有权限的构造器、属性和方法，但是不能获取父类继承下来的。
+            //getConstructor 、 getField 和 getMethod只能获取当前class及其父类、接口中的public修饰的构造器、属性和方法，
+            //getDeclaredXXX可以获取当前Class所有权限的构造器、属性和方法，但是不能获取父类继承下来的。
             Field name = clazz.getDeclaredField("name");
             name.setAccessible(true);
             Object value = name.get(userPO);
