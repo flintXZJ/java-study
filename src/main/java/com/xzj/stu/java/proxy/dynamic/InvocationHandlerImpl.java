@@ -35,9 +35,11 @@ public class InvocationHandlerImpl implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // TODO: 2019/8/8 doSomething
-        logger.info("InvocationHandlerImpl: 调用真是对象方法前...");
+        logger.info("InvocationHandlerImpl: 调用真实对象方法前...");
+
+        //当代理对象调用真实对象的方法时，其会自动的跳转到代理对象关联的handler对象的invoke方法来进行调用
         Object returnValue = method.invoke(subject, args);
-        logger.info("InvocationHandlerImpl: 调用真是对象方法后.");
+        logger.info("InvocationHandlerImpl: 调用真实对象方法后.");
         return returnValue;
     }
 }

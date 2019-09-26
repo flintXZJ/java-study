@@ -2,7 +2,12 @@ package com.xzj.stu.java.proxy.dynamic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.ProxyGenerator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
@@ -37,5 +42,21 @@ public class Client {
 
         String retStr = subject.sayHello("xzj");
         logger.info("client: result = {}", retStr);
+
+        // 将生成的字节码保存到本地，
+        createProxyClassFile();
+    }
+
+    private static void createProxyClassFile(){
+        String name = "ProxySubject";
+        byte[] data = ProxyGenerator.generateProxyClass(name,new Class[]{Subject.class});
+        try(FileOutputStream out = new FileOutputStream(name+".class")){
+            System.out.println((new File("hello")).getAbsolutePath());
+            out.write(data);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
