@@ -38,6 +38,8 @@ public class Client {
         //当RealSubject没有实现Subject的时候，报错【ClassCastException: com.sun.proxy.$Proxy0 cannot be cast to com.xzj.stu.java.proxy.dynamic.RealSubject】
         Subject subject = (Subject) Proxy.newProxyInstance(classLoader, interfaces, invocationHandler);
 
+        logger.info("classLoader: {}", classLoader);
+        logger.info("interfaces: {}", interfaces);
         logger.info("client: 动态代理对象的类型：{}", subject.getClass().getName());
 
         String retStr = subject.sayHello("xzj");

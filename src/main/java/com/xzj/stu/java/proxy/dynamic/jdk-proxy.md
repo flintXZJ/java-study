@@ -166,7 +166,7 @@ public V get(K key, P parameter) {
 }
 ```
 
-从while(true){}代码中可以看出supplier是个factory，该类定义在WeakCache内
+从while(true){}代码中可以看出supplier是个factory，该类定义在WeakCache内。其supplier.get()方法：
 ``` 
 @Override
 public synchronized V get() { // serialize access
