@@ -1,5 +1,6 @@
 package com.xzj.stu.java.leetcode;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,43 +18,7 @@ import org.slf4j.LoggerFactory;
 public class LeetCodeStrStr {
     private static final Logger LOGGER = LoggerFactory.getLogger(LeetCodeStrStr.class);
 
-    public static void main(String[] args) {
-        LeetCodeStrStr leetCode = new LeetCodeStrStr();
-        String haystack = "vpmfakdqlqbfilgpggotuhtnofpgcagohigvsaeqhrbnqwoedldspggastwnaicgekgllgkhxeevuyvchuoqvkkceiykfrnuiltiyccdlqdrwkawkhtragtgnmmripcoydugthcivmuhqbnluehyleuymikgxmyclyycxtdrkvglhfdkcfscgrxgtenugcsgbbeqwucp";
-        String needle = "nuiltiyccdlqdrwkawkhtragtgnmmripcoydugthcivmuhqbnluehyleuymikg";
-
-        int count = 1000_000;
-
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < count; i++) {
-            leetCode.strStr(haystack, needle);
-        }
-        LOGGER.info("strStr.result : {} ms", (System.currentTimeMillis() - start));
-        LOGGER.info("strStr.result : {}", leetCode.strStr(haystack, needle));
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < count; i++) {
-            leetCode.bfAlgorithm(haystack, needle);
-        }
-        LOGGER.info("bf_Algorithm.result : {} ms", (System.currentTimeMillis() - start));
-        LOGGER.info("bf_Algorithm.result : {}", leetCode.bfAlgorithm(haystack, needle));
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < count; i++) {
-            leetCode.rkAlgorithm(haystack, needle);
-        }
-        LOGGER.info("rkAlgorithm.result : {} ms", (System.currentTimeMillis() - start));
-        LOGGER.info("rkAlgorithm.result : {}", leetCode.rkAlgorithm(haystack, needle));
-
-        start = System.currentTimeMillis();
-        for (int i = 0; i < count; i++) {
-            leetCode.kmpAlgorithm(haystack, needle);
-        }
-        LOGGER.info("kmpAlgorithm.result : {} ms", (System.currentTimeMillis() - start));
-        LOGGER.info("kmpAlgorithm.result : {}", leetCode.kmpAlgorithm(haystack, needle));
-    }
-
-    public int strStr(String haystack, String needle) {
+    public static int strStr(String haystack, String needle) {
         if (needle == null || needle.length() == 0) {
             return 0;
         }
@@ -82,7 +47,6 @@ public class LeetCodeStrStr {
      * BF Brute-Force算法
      * 时间复杂度：最好O(n+m)，最坏O(n*m)
      * https://mp.weixin.qq.com/s/Z1ehFKIVd07UCqjtTXDY2w
-     * https://blog.csdn.net/zhanglong_4444/article/details/90671650
      * <p>
      * 常用算法
      * KISS（Keep it Simple and Stupid）设计原则
@@ -91,7 +55,7 @@ public class LeetCodeStrStr {
      * @param needle
      * @return
      */
-    public int bfAlgorithm(String haystack, String needle) {
+    public static int bfAlgorithm(String haystack, String needle) {
         if (needle == null || needle.length() == 0) {
             return 0;
         }
@@ -136,7 +100,7 @@ public class LeetCodeStrStr {
      * @param needle
      * @return
      */
-    public int rkAlgorithm(String haystack, String needle) {
+    public static int rkAlgorithm(String haystack, String needle) {
         if (needle == null || needle.length() == 0) {
             return 0;
         }
@@ -184,7 +148,7 @@ public class LeetCodeStrStr {
      * @param needle
      * @return
      */
-    public int kmpAlgorithm(String haystack, String needle) {
+    public static int kmpAlgorithm(String haystack, String needle) {
         if (needle == null || needle.length() == 0) return 0;
         if (haystack == null || haystack.length() < needle.length()) return -1;
 
@@ -207,7 +171,7 @@ public class LeetCodeStrStr {
         return -1;
     }
 
-    public int[] getKMPNext(String needle, int nlen) {
+    private static int[] getKMPNext(String needle, int nlen) {
         int[] next = new int[nlen];
         next[0] = -1;
         int k = -1;
@@ -231,7 +195,7 @@ public class LeetCodeStrStr {
      * @param nlen
      * @return
      */
-    public int[] getKMPNext_v2(String needle, int nlen) {
+    private static int[] getKMPNext_v2(String needle, int nlen) {
         int[] next = new int[nlen];
         next[0] = -1;
         int k = -1;
@@ -255,19 +219,19 @@ public class LeetCodeStrStr {
     /**
      * bm 算法
      * https://mp.weixin.qq.com/s/S68mm8XicGerimD8zC6b-Q
-     * https://blog.csdn.net/zhanglong_4444/article/details/90671650
      * https://blog.csdn.net/wwj_748/article/details/8686576
-     *
-     *  BM算法定义了两个规则：
-     *
-     * 坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。此外，如果"坏字符"不包含在模式串之中，则最右出现位置为-1。
+     * <p>
+     * BM算法定义了两个规则：
+     * <p>
+     * 坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，
+     *      移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。此外，如果"坏字符"不包含在模式串之中，则最右出现位置为-1。
      * 好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。
      *
      * @param haystack
      * @param needle
      * @return
      */
-    public int bmAlgorithm(String haystack, String needle) {
+    public static int bmAlgorithm(String haystack, String needle) {
         if (needle == null || needle.length() == 0) {
             return 0;
         }
@@ -275,8 +239,93 @@ public class LeetCodeStrStr {
             return -1;
         }
 
-        // TODO: 2019/10/16 待实现
-        return -1;
+        // TODO: 2019/10/18 -xzj bm算法错误
+
+        int hlen = haystack.length();
+        int nlen = needle.length();
+        //从头对其
+        int start = 0;
+        //文本串开始比较的位置
+        int h_index = start + nlen - 1;
+        //模式串开始比较的位置
+        int n_index = nlen - 1;
+
+        String googSuffix = "";
+        while (h_index >= start) {
+            if (haystack.charAt(h_index) == needle.charAt(n_index)) {
+                googSuffix = needle.charAt(n_index) + googSuffix;
+                h_index--;
+                n_index--;
+            } else {
+                int badCharDist = bmBadCharDist(needle, haystack.charAt(h_index), n_index);
+                int goodSuffixDist = bmGoodSuffixDist(needle, googSuffix);
+                if (badCharDist > goodSuffixDist) {
+                    start = start + badCharDist;
+                } else {
+                    start = start + goodSuffixDist;
+                }
+                //重置文本串、模式串的开始比较位置，重置好后缀
+                h_index = start + nlen - 1;
+                if (h_index > hlen - 1) {
+                    return -1;
+                }
+                LOGGER.debug("badCharDist = {}, googSuffix = {}, goodSuffixDist = {}, start = {}, h_index = {}",
+                        badCharDist, googSuffix, goodSuffixDist, start, h_index);
+                googSuffix = "";
+                n_index = nlen - 1;
+            }
+        }
+        return h_index + 1;
+    }
+
+    /**
+     * 坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，
+     * 此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。
+     * 此外，如果"坏字符"不包含在模式串之中，则最右出现位置为-1。
+     *
+     * @param needle       模式串
+     * @param c            坏字符
+     * @param badCharIndex 坏字符在模式串中的位置
+     * @return
+     */
+    private static int bmBadCharDist(String needle, Character c, int badCharIndex) {
+        int rightIndex = -1;
+        int nlen = needle.length();
+        for (int i = nlen - 1; i >= 0; i--) {
+            if (c == needle.charAt(i)) {
+                rightIndex = i;
+                break;
+            }
+        }
+        return badCharIndex - rightIndex;
+    }
+
+    /**
+     * 好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串**上一次**（不是第一次）出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。
+     * <p>
+     * 举例：
+     * 文本字符串：here is a simple example
+     * 模式串：example
+     * 所有的“好后缀”（mple、ple、le、e）之中，只有“e”在“example”的头部出现，所以后移6-0=6位
+     *
+     * @return
+     */
+    private static int bmGoodSuffixDist(String needle, String suffix) {
+        if (StringUtils.isEmpty(suffix)) return 0;
+        int dist = 0;
+        for (int i = suffix.length() - 1; i >= 0; i--) {
+            String goodSuffix = suffix.substring(i, suffix.length());
+            String substring = needle.substring(0, needle.length() - goodSuffix.length());
+            //goodSuffix好后缀在模式串中的位置
+            int goodsuffix_index = needle.lastIndexOf(goodSuffix);
+            //goodSuffix在needle中上一次出现时的索引
+            int last_index = substring.lastIndexOf(goodSuffix);
+            LOGGER.debug("goodsuffix_index = {}, last_index = {}", goodsuffix_index, last_index);
+            if (goodsuffix_index - last_index > dist) {
+                dist = goodsuffix_index - last_index;
+            }
+        }
+        return dist;
     }
 
     /**
@@ -286,7 +335,7 @@ public class LeetCodeStrStr {
      * @param needle
      * @return
      */
-    public int sundayAlgorithm(String haystack, String needle) {
+    public static int sundayAlgorithm(String haystack, String needle) {
         if (needle == null || needle.length() == 0) {
             return 0;
         }
@@ -294,7 +343,63 @@ public class LeetCodeStrStr {
             return -1;
         }
 
-        // TODO: 2019/10/16 待实现
+        int hstart = 0;//每次遇到不匹配的字符之后，重置haystack开始匹配的字符索引
+        int i = 0;
+        int j = 0;
+        int hlen = haystack.length();
+        int nlen = needle.length();
+        while (i < hlen && j < nlen) {
+            if (haystack.charAt(i) != needle.charAt(j)) {
+                if (hstart + nlen > hlen - 1) {
+                    return -1;
+                }
+                int dist = sundayDist(needle, haystack.charAt(hstart + nlen));
+                hstart = hstart + dist + 1;
+                i = hstart;
+                j = 0;
+            } else {
+                i++;
+                j++;
+            }
+        }
+        if (j == nlen) return i - j;
         return -1;
+    }
+
+    /**
+     * 计算字符c在needle中最右端的该字符到末尾的距离
+     * c不在needle中，距离=needle的长度
+     *
+     * @param needle
+     * @param c
+     * @return
+     */
+    private static int sundayDist(String needle, Character c) {
+        int len = needle.length();
+        int index = len - 1;
+        while (index > -1) {
+            if (needle.charAt(index) == c) {
+                break;
+            }
+            index--;
+        }
+
+        return len - index - 1;
+    }
+
+    public static void main(String[] args) {
+        String haystack = "baabbaaaaaaabbaaaaabbabbababaabbabbbbbabbabbbbbbabababaabbbbbaaabbbbabaababababbbaabbbbaaabbaababbbaabaabbabbaaaabababaaabbabbababbabbaaabbbbabbbbabbabbaabbbaa";
+        String needle = "bbaaaababa";
+//        String haystack = "substring searching algorithm";
+//        String needle = "search";
+//
+        LOGGER.info("strStr.result : {}", LeetCodeStrStr.strStr(haystack, needle));
+        LOGGER.info("bf_Algorithm.result : {}", LeetCodeStrStr.bfAlgorithm(haystack, needle));
+        LOGGER.info("rkAlgorithm.result : {}", LeetCodeStrStr.rkAlgorithm(haystack, needle));
+        LOGGER.info("kmpAlgorithm.result : {}", LeetCodeStrStr.kmpAlgorithm(haystack, needle));
+//        //haystack : "here is a simple example"; needle : "example"
+        LOGGER.info("bmAlgorithm.result : {}", LeetCodeStrStr.bmAlgorithm(haystack, needle));
+//        //haystack : "substring searching algorithm"; needle : "search"
+        LOGGER.info("sundayAlgorithm.result : {}", LeetCodeStrStr.sundayAlgorithm(haystack, needle));
     }
 }
