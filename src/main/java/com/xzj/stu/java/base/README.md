@@ -1,5 +1,7 @@
-> 参考：https://blog.csdn.net/apple_wolf/article/details/81331475
-
+> [Java 静态方法与静态属性](https://blog.csdn.net/apple_wolf/article/details/81331475)  
+> [聊聊 Java8 以后各个版本的新特性](https://juejin.im/post/5d5950806fb9a06b0a277412)  
+> [Java 9的模块化](https://zhuanlan.zhihu.com/p/24800180)  
+> [你见过哪些目瞪口呆的 Java 代码技巧？](https://juejin.im/post/5d8db248f265da5b81793861)
 
 ### 继承
 接口是常量值和方法定义的集合。接口是一种特殊的抽象类。
