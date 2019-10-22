@@ -1,10 +1,13 @@
 package com.xzj.stu.java.reflex;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Constructor;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -53,5 +56,47 @@ public class ReflexTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Data
+    public static class UserPO extends BasePO implements Serializable {
+        private static final long serialVersionUID = 6703216809599385427L;
+
+        private UserPO() {
+
+        }
+
+        public UserPO(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String publicName;
+
+        protected String protectedName;
+
+        private String name;
+
+        private String address;
+
+        private Integer age;
+
+        private Integer sex;
+
+        private String city;
+
+        private void sayHello(String content, Integer age) {
+            System.out.println(this.name + " is " + age + " old, say: " + content);
+        }
+    }
+
+    @Setter
+    @Getter
+    public static class BasePO {
+
+        private Long id;
+
+        public Long testId;
     }
 }
