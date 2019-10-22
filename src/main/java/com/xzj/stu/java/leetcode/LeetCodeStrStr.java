@@ -257,7 +257,12 @@ public class LeetCodeStrStr {
                 h_index--;
                 n_index--;
             } else {
-                int badCharDist = bmBadCharDist(needle, haystack.charAt(h_index), n_index);
+                //坏字符
+                //int badCharDist = n_index - bmBadCharDist(needle, haystack.charAt(h_index));
+                int[] badCharsDist = bmBadCharsDist(needle);
+                int badCharDist = n_index - badCharsDist[haystack.charAt(h_index)];
+
+                //好后缀
                 int goodSuffixDist = bmGoodSuffixDist(needle, googSuffix);
                 if (badCharDist > goodSuffixDist) {
                     start = start + badCharDist;
@@ -269,8 +274,6 @@ public class LeetCodeStrStr {
                 if (h_index > hlen - 1) {
                     return -1;
                 }
-                LOGGER.debug("badCharDist = {}, googSuffix = {}, goodSuffixDist = {}, start = {}, h_index = {}",
-                        badCharDist, googSuffix, goodSuffixDist, start, h_index);
                 googSuffix = "";
                 n_index = nlen - 1;
             }
@@ -285,10 +288,9 @@ public class LeetCodeStrStr {
      *
      * @param needle       模式串
      * @param c            坏字符
-     * @param badCharIndex 坏字符在模式串中的位置
      * @return
      */
-    private static int bmBadCharDist(String needle, Character c, int badCharIndex) {
+    private static int bmBadCharDist(String needle, Character c) {
         int rightIndex = -1;
         int nlen = needle.length();
         for (int i = nlen - 1; i >= 0; i--) {
@@ -297,7 +299,25 @@ public class LeetCodeStrStr {
                 break;
             }
         }
-        return badCharIndex - rightIndex;
+        return rightIndex;
+    }
+
+    /**
+     * 计算模式串中字符最右的位置
+     *
+     * @param needle
+     * @return
+     */
+    private static int[] bmBadCharsDist(String needle) {
+        int[] ints = new int[256];
+        for (int i = 0; i < 256; i++) {
+            ints[i] = -1;
+        }
+        for (int j = 0; j < needle.length(); j++) {
+            int ascii =(int) needle.charAt(j);
+            ints[ascii] = j;
+        }
+        return ints;
     }
 
     /**
@@ -320,7 +340,6 @@ public class LeetCodeStrStr {
             int goodsuffix_index = needle.lastIndexOf(goodSuffix);
             //goodSuffix在needle中上一次出现时的索引
             int last_index = substring.lastIndexOf(goodSuffix);
-            LOGGER.debug("goodsuffix_index = {}, last_index = {}", goodsuffix_index, last_index);
             if (goodsuffix_index - last_index > dist) {
                 dist = goodsuffix_index - last_index;
             }
