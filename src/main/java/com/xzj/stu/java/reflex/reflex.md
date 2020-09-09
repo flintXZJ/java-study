@@ -1,6 +1,7 @@
 ## java反射原理(reflex)
-> jdk 1.8.0_221
+> jdk 1.8.0_221  
 > [大家都说 Java 反射效率低，你知道原因在哪里么](https://juejin.im/post/5da33b2351882509334fc0d3)
+> [关于反射调用方法的一个log](https://www.iteye.com/blog/rednaxelafx-548536)
 
 ### 1、获取反射方法
 

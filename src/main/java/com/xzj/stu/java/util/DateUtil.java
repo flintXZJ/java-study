@@ -11,6 +11,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * SimpleDateFormat : 线程不安全，不可以定义为静态变量时使用
+ * jdk8 新时间类库LocalDateTime
+ * DateTimeFormatter线程安全，可以使用静态变量
+ *
+ */
 public class DateUtil {
 	public static final String FORMAT_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 	public static final String FORMAT_YYYYMMDD = "yyyyMMdd";

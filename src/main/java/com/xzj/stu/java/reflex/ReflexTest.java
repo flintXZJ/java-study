@@ -23,14 +23,14 @@ public class ReflexTest {
     private static final Logger logger = LoggerFactory.getLogger(ReflexTest.class);
 
     public static void main(String[] args) throws Exception {
-        UserPO userPO = new UserPO("xzj", 28);
+//        UserPO object = new UserPO("xzj", 28);
         // 获取class的三种方法
-        Class clazz = userPO.getClass();
-//        Class clazz = UserPO.class;
-//        Class clazz = Class.forName("com.xzj.stu.java.reflex.UserPO");
+//        Class clazz = object.getClass();//触发类的初始化 todo 确认
+//        Class clazz = UserPO.class;//不会触发类的初始化但XXX类已经被加载到方法区 todo 确认
+        Class clazz = Class.forName("com.xzj.stu.java.reflex.ReflexTest$UserPO");//触发类的初始化 todo 确认
 
         // 获取对象的2中方法
-//        Object object = clazz.newInstance();
+        Object object = clazz.newInstance();
 //        clazz.getDeclaredConstructor().newInstance();
 
 
@@ -44,15 +44,24 @@ public class ReflexTest {
             //getDeclaredXXX可以获取当前Class所有权限的构造器、属性和方法，但是不能获取父类继承下来的。
             Field name = clazz.getDeclaredField("name");
             name.setAccessible(true);
-            Object value = name.get(userPO);
+            Object value = name.get(object);
             logger.info("name = {}", value);
 
-            name.set(userPO, "xzj2");
-            logger.info("userPO = {}", JSONObject.toJSONString(userPO));
+            name.set(object, "xzj2");
+            logger.info("userPO = {}", JSONObject.toJSONString(object));
 
             Method sayHello = clazz.getDeclaredMethod("sayHello", String.class, Integer.class);
             sayHello.setAccessible(true);
-            sayHello.invoke(userPO, "hello world", 29);
+            sayHello.invoke(object, "hello world", 29);
+
+            //执行代码时加入：-XX:+TraceClassLoading
+            /**
+             * [Loaded sun.reflect.GeneratedMethodAccessor1 from __JVM_DefineClass__]
+             *
+             */
+            for (int i = 0; i < 16; i++) {
+                sayHello.invoke(object, "hello world" + i, 29);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,11 +72,12 @@ public class ReflexTest {
     public static class UserPO extends BasePO implements Serializable {
         private static final long serialVersionUID = 6703216809599385427L;
 
-        private UserPO() {
-
+        public UserPO() {
+            System.out.println("public UserPO()");
         }
 
         public UserPO(String name, Integer age) {
+            System.out.println("public UserPO(String name, Integer age)");
             this.name = name;
             this.age = age;
         }

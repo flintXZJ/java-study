@@ -100,3 +100,6 @@ public enum RetentionPolicy {
 参考：[java @Inherited注解的作用](https://www.jianshu.com/p/7f54e7250be3)  
 参考：[annotation(@Retention@Target)详解](https://www.cnblogs.com/gmq-sh/p/4798194.html)  
 参考：[Java 注解](https://www.jianshu.com/p/badd3a78ded8)
+
+[05 注解与反射 & JVM](https://www.cnblogs.com/moveofgod/p/12490893.html)
+[JAVA 注解的基本原理](https://www.cnblogs.com/yangming1996/p/9295168.html)
